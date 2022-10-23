@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xiaodongnju.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="指定顺序排序1234list_custom &#x3D; [&amp;#x27;337城市&amp;#x27;,&quot;京津冀及周边&quot;,&quot;汾渭平原&quot;, &amp;#x27;长三角&amp;#x27;, &quot;成渝地区&quot;,&quot;珠三角&quot;]regiondata[&amp;#x27;Region&amp;#x27;] &#x3D; regiondata[&amp;#x27;Region&amp;#x27;].astype">
+<meta property="og:type" content="article">
+<meta property="og:title" content="numpy">
+<meta property="og:url" content="https://xiaodongnju.github.io/blog/2022/10/23/numpy/index.html">
+<meta property="og:site_name" content="Hi there.">
+<meta property="og:description" content="指定顺序排序1234list_custom &#x3D; [&amp;#x27;337城市&amp;#x27;,&quot;京津冀及周边&quot;,&quot;汾渭平原&quot;, &amp;#x27;长三角&amp;#x27;, &quot;成渝地区&quot;,&quot;珠三角&quot;]regiondata[&amp;#x27;Region&amp;#x27;] &#x3D; regiondata[&amp;#x27;Region&amp;#x27;].astype">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-23T10:09:12.000Z">
+<meta property="article:modified_time" content="2022-10-23T13:57:35.033Z">
+<meta property="article:author" content="Xiaodong">
+<meta property="article:tag" content="data analysis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xiaodongnju.github.io/blog/2022/10/23/numpy/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xiaodongnju.github.io/blog/2022/10/23/numpy/","path":"2022/10/23/numpy/","title":"numpy"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>numpy | Hi there.</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hi there.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E9%A1%BA%E5%BA%8F%E6%8E%92%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">指定顺序排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">合并数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E6%9C%9Findex"><span class="nav-number">3.</span> <span class="nav-text">日期index</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81"><span class="nav-number">4.</span> <span class="nav-text">常见</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">5.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%A4%84%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">日期处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list-%E8%BD%AC-dictionary-data-frame"><span class="nav-number">7.</span> <span class="nav-text">list 转 dictionary @ data frame</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AD%89%E5%B7%AE%E6%95%B0%E5%88%97"><span class="nav-number">8.</span> <span class="nav-text">等差数列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mask"><span class="nav-number">9.</span> <span class="nav-text">mask</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E5%BA%94%E5%85%83%E7%B4%A0%E8%BF%90%E7%AE%97"><span class="nav-number">10.</span> <span class="nav-text">对应元素运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E4%B8%A4%E6%AE%B5%E6%95%B0%E6%8D%AE"><span class="nav-number">11.</span> <span class="nav-text">拼接两段数据</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xiaodong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaodongnju.github.io/blog/2022/10/23/numpy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Xiaodong">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi there.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="numpy | Hi there.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          numpy
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-10-23 18:09:12 / 修改时间：21:57:35" itemprop="dateCreated datePublished" datetime="2022-10-23T18:09:12+08:00">2022-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="指定顺序排序"><a href="#指定顺序排序" class="headerlink" title="指定顺序排序"></a>指定顺序排序</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">list_custom = [<span class="string">&#x27;337城市&#x27;</span>,<span class="string">&quot;京津冀及周边&quot;</span>,<span class="string">&quot;汾渭平原&quot;</span>, <span class="string">&#x27;长三角&#x27;</span>, <span class="string">&quot;成渝地区&quot;</span>,<span class="string">&quot;珠三角&quot;</span>]</span><br><span class="line">regiondata[<span class="string">&#x27;Region&#x27;</span>] = regiondata[<span class="string">&#x27;Region&#x27;</span>].astype(<span class="string">&#x27;category&#x27;</span>)</span><br><span class="line">regiondata[<span class="string">&#x27;Region&#x27;</span>].cat.reorder_categories(list_custom, inplace=<span class="literal">True</span>)</span><br><span class="line">regiondata.sort_values(<span class="string">&#x27;Region&#x27;</span>, inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">np.column_stack((a,b))  <span class="comment">#作为列合并</span></span><br><span class="line">np.row_stack((a,b))  <span class="comment"># 作为行</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="日期index"><a href="#日期index" class="headerlink" title="日期index"></a>日期index</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(fname,index_col=<span class="string">&quot;datetime&quot;</span>)</span><br><span class="line">df.index = pd.to_datetime(df.index,<span class="built_in">format</span>=<span class="string">&quot;%Y-%m-%d&quot;</span>)</span><br><span class="line"></span><br><span class="line">df.index.month <span class="comment"># 获取月份</span></span><br><span class="line">df.index.year <span class="comment"># 获取年份</span></span><br><span class="line"></span><br><span class="line">df.loc[<span class="string">&#x27;2000-6-1&#x27;</span>:<span class="string">&#x27;2000-6-10&#x27;</span>] <span class="comment"># 切片</span></span><br><span class="line"></span><br><span class="line">df[df.index.month.isin([<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>])] <span class="comment"># 按月份切片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 时区转换</span></span><br><span class="line">df.index = pd.to_datetime(df.time,<span class="built_in">format</span>=<span class="string">&quot;%Y-%m-%dT%H:%M:%S&quot;</span>, utc=<span class="literal">True</span>)</span><br><span class="line">df.index.tz_convert(<span class="string">&#x27;Asia/Shanghai&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="常见"><a href="#常见" class="headerlink" title="常见"></a>常见</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 经过pandas 读取后, 再写出,部分数据小数位数超长</span></span><br><span class="line"><span class="comment"># 在read_csv时, 加入参数float_precision=“round_trip”, 所有数据会当做string读取, 使用时再进行相应的转换为float</span></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;%s/%s_%s_%s.csv&#x27;</span> %(outputdir, region, var, YYYYMM),float_precision=<span class="string">&quot;round_trip&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 三维计算相关系数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pearsonr_2D</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;computes pearson correlation coefficient</span></span><br><span class="line"><span class="string">       where x is a 1D and y a 2D array&quot;&quot;&quot;</span></span><br><span class="line">    upper = np.<span class="built_in">sum</span>((x - np.mean(x,axis=<span class="number">0</span>)) * (y - np.mean(y, axis=<span class="number">0</span>)), axis=<span class="number">0</span>)</span><br><span class="line">    lower = np.sqrt(np.<span class="built_in">sum</span>(np.power(x - np.mean(x,axis=<span class="number">0</span>), <span class="number">2</span>),axis=<span class="number">0</span>) * np.<span class="built_in">sum</span>(np.power(y - np.mean(y, axis=<span class="number">0</span>), <span class="number">2</span>), axis=<span class="number">0</span>))</span><br><span class="line">    rho = upper / lower</span><br><span class="line">    <span class="keyword">return</span> rho</span><br><span class="line">A = np.array([[[<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">4</span>,<span class="number">6</span>,<span class="number">5</span>]],[[<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">23</span>]],[[<span class="number">3</span>,<span class="number">9</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">7</span>,<span class="number">5</span>]]])</span><br><span class="line">B = np.array([[[<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>],[<span class="number">14</span>,<span class="number">4</span>,<span class="number">2</span>]],[[<span class="number">15</span>,<span class="number">6</span>,<span class="number">1</span>],[<span class="number">6</span>,<span class="number">7</span>,<span class="number">91</span>]],[[<span class="number">3</span>,<span class="number">9</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">7</span>,<span class="number">5</span>]]])</span><br><span class="line">c = pearsonr_2D(A,B)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i,region <span class="keyword">in</span> <span class="built_in">enumerate</span>(region):</span><br><span class="line">    <span class="built_in">print</span>(i,region)</span><br><span class="line"><span class="comment"># 创建dataframe追加行数据</span></span><br><span class="line">df = pd.DataFrame(columns = [<span class="string">&quot;ebayno&quot;</span>, <span class="string">&quot;p_sku&quot;</span>, <span class="string">&quot;sale&quot;</span>, <span class="string">&quot;sku&quot;</span>]) <span class="comment">#创建一个空的dataframe </span></span><br><span class="line">df = df.append(dframe1.loc[dframe1.p_sku == ps], ignore_index=<span class="literal">True</span>)  <span class="comment">#忽略索引,往dataframe中插入一行数据 </span></span><br><span class="line"></span><br><span class="line">df = df.append([&#123;<span class="string">&#x27;site&#x27;</span>:site,<span class="string">&#x27;MB&#x27;</span>:mb,<span class="string">&#x27;NMB&#x27;</span>:nmb,<span class="string">&#x27;NME&#x27;</span>:nme,<span class="string">&#x27;r2&#x27;</span>:r2&#125;],ignore_index=<span class="literal">True</span>)</span><br><span class="line">来自 &lt;http://blog.csdn.net/zn505119020/article/details/<span class="number">77324029</span>&gt; </span><br><span class="line"></span><br><span class="line">合并</span><br><span class="line">df = pd.concat([inputdf,classdf],axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">根据分组统计，对不同行操作</span><br><span class="line">gp_col = <span class="string">&#x27;SITE&#x27;</span></span><br><span class="line">df_max = obs.groupby(gp_col)[species].<span class="built_in">max</span>()</span><br><span class="line">df_min = obs.groupby(gp_col)[species2].<span class="built_in">min</span>()</span><br><span class="line"></span><br><span class="line">插入列 insert（位置，列名，数据）</span><br><span class="line">df_max.insert(<span class="number">0</span>,<span class="string">&quot;站点&quot;</span>,sitename)</span><br><span class="line"></span><br><span class="line">DataFrame 切片操作，loc, iloc</span><br><span class="line"><span class="built_in">print</span> df.loc[<span class="number">1</span>:<span class="number">3</span>, [<span class="string">&#x27;total_bill&#x27;</span>, <span class="string">&#x27;tip&#x27;</span>]]</span><br><span class="line"><span class="built_in">print</span> df.loc[<span class="number">1</span>:<span class="number">3</span>, <span class="string">&#x27;tip&#x27;</span>: <span class="string">&#x27;total_bill&#x27;</span>] </span><br><span class="line"><span class="built_in">print</span> df.iloc[<span class="number">1</span>:<span class="number">3</span>, [<span class="number">1</span>, <span class="number">2</span>]] </span><br><span class="line"><span class="built_in">print</span> df.iloc[<span class="number">1</span>:<span class="number">3</span>, <span class="number">1</span>: <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">来自 &lt;https://blog.csdn.net/ly_ysys629/article/details/<span class="number">55224284</span>&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">读取csv</span><br><span class="line">pd.read_csv(<span class="string">&quot;filename&quot;</span>,sep=<span class="string">&#x27;,&#x27;</span>,header=<span class="literal">None</span>,index=<span class="literal">False</span>)  <span class="comment"># sep 分隔符</span></span><br><span class="line">obs  = pd.read_csv(<span class="string">&quot;d04_chem.txt&quot;</span>,delim_whitespace = <span class="literal">True</span>) 空格分割</span><br><span class="line">csv编码问题： VS code先用正确编码打开（GB…?），然后保存为正常编码（能正确显示GB…），然后重新保存为UTF-<span class="number">8</span>格式，读取正常。</span><br><span class="line"></span><br><span class="line">获取数据框列名</span><br><span class="line"><span class="built_in">print</span>(df.columns)   </span><br><span class="line">获取数据框列</span><br><span class="line">df[<span class="string">&quot;column-name&quot;</span>]</span><br><span class="line">选取行</span><br><span class="line">df[df[<span class="string">&quot;column-name&quot;</span>]==<span class="string">&quot;spec-name&quot;</span>]</span><br><span class="line">选取数据</span><br><span class="line">df.column[index]</span><br><span class="line">df.ix[<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">列表转换成dataframe</span><br><span class="line">df = pd.DataFrame([w1_p,w2_p,w3_p,w4_p],index=[<span class="string">&#x27;w1_pre&#x27;</span>,<span class="string">&#x27;w2_pre&#x27;</span>,<span class="string">&#x27;w3_pre&#x27;</span>,<span class="string">&#x27;w4_pre&#x27;</span>])</span><br><span class="line">修改dataframe的列名</span><br><span class="line">df.columns=[<span class="string">&#x27;site&#x27;</span>,<span class="string">&#x27;time&#x27;</span>,<span class="string">&#x27;aqi&#x27;</span>,<span class="string">&#x27;so2&#x27;</span>,<span class="string">&#x27;no2&#x27;</span>,<span class="string">&#x27;pm10&#x27;</span>,<span class="string">&#x27;co&#x27;</span>,<span class="string">&#x27;o3&#x27;</span>,<span class="string">&#x27;pm2_5&#x27;</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cname = allsite.query(<span class="string">&quot;Area == @city&quot;</span>).iloc[<span class="number">0</span>,<span class="number">4</span>]</span><br><span class="line">cname = allsite.query(<span class="string">&quot;Area == &#x27;北京&#x27;&quot;</span>).iloc[<span class="number">0</span>,<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<h1 id="日期处理"><a href="#日期处理" class="headerlink" title="日期处理"></a>日期处理</h1><ul>
+<li>某个月的开始和结束日期</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dateutil.relativedelta <span class="keyword">import</span> relativedelta</span><br><span class="line">start = datetime.datetime.strptime(<span class="string">&quot;2017-%s-01&quot;</span> %mon,<span class="string">&quot;%Y-%m-%d&quot;</span>)</span><br><span class="line">end = start + relativedelta(months=+<span class="number">1</span>) + datetime.timedelta(days=-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时区转换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.index = pd.to_datetime(data.index,<span class="built_in">format</span>=<span class="string">&#x27;%Y%j%H&#x27;</span>).tz_localize(<span class="string">&#x27;UTC&#x27;</span>).tz_convert(<span class="string">&quot;Asia/Shanghai&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置时间格式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.index = res.index.strftime(<span class="string">&#x27;%Y-%m-%d&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="list-转-dictionary-data-frame"><a href="#list-转-dictionary-data-frame" class="headerlink" title="list 转 dictionary @ data frame"></a>list 转 dictionary @ data frame</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">keys = [<span class="string">&quot;price&quot;</span>,<span class="string">&quot;toalAmount&quot;</span>]</span><br><span class="line">values = [<span class="string">&quot;0.01&quot;</span>,<span class="string">&quot;10000&quot;</span>] </span><br><span class="line">d = <span class="built_in">dict</span>(<span class="built_in">zip</span>(keys,values))</span><br><span class="line"></span><br><span class="line">pd.DataFrame([<span class="built_in">dict</span>(<span class="built_in">zip</span>(columns,temp))],columns=columns,index=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="等差数列"><a href="#等差数列" class="headerlink" title="等差数列"></a>等差数列</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cticks = np.linspace(zmin, zmax, num=<span class="number">11</span>, dtype=<span class="built_in">int</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="mask"><a href="#mask" class="headerlink" title="mask"></a>mask</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">regionmean</span>(<span class="params">lat,lon,data,corners</span>):</span><br><span class="line">    llcrnrlon,urcrnrlon,llcrnrlat, urcrnrlat = corners</span><br><span class="line">    mask = np.where((lat&lt;urcrnrlat)&amp;(lat&gt;llcrnrlat)&amp;(lon&lt;urcrnrlon)&amp;(lon&gt;llcrnrlon),<span class="number">1</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">len</span>(data.shape)==<span class="number">3</span>):</span><br><span class="line">        mask3d = np.broadcast_arrays(mask[np.newaxis,:,:],data)[<span class="number">0</span>]</span><br><span class="line">        datamask = np.ma.masked_where(mask3d!=<span class="number">1</span>, data)</span><br><span class="line">        <span class="keyword">return</span> np.nanmean(np.nanmean(datamask,axis=<span class="number">1</span>),axis=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        datamask = np.ma.masked_where(mask!=<span class="number">1</span>, data)</span><br><span class="line">        <span class="keyword">return</span> np.nanmean(datamask.flatten())</span><br></pre></td></tr></table></figure>
+
+<h1 id="对应元素运算"><a href="#对应元素运算" class="headerlink" title="对应元素运算"></a>对应元素运算</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>, <span class="number">2</span>]])</span><br><span class="line">b = np.array([[<span class="number">2</span>, <span class="number">4</span>]])</span><br><span class="line">r1 = a + b  <span class="comment"># [[3 6]]</span></span><br><span class="line">r2 = a - b  <span class="comment"># [[-1 -2]]</span></span><br><span class="line">r3 = a * b  <span class="comment"># [[2 8]]</span></span><br><span class="line">r4 = a / b  <span class="comment"># [[0.5 0.5]]</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="拼接两段数据"><a href="#拼接两段数据" class="headerlink" title="拼接两段数据"></a>拼接两段数据</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">data2 = f.loc[<span class="string">&#x27;2017-06-01&#x27;</span>:<span class="string">&#x27;2017-08-30&#x27;</span>]</span><br><span class="line">data3 = f.loc[<span class="string">&#x27;2017-09-01&#x27;</span>:<span class="string">&#x27;2017-11-30&#x27;</span>]</span><br><span class="line">data1 = f.loc[<span class="string">&#x27;2017-03-01&#x27;</span>:<span class="string">&#x27;2017-05-31&#x27;</span>]</span><br><span class="line">data4 = f.loc[<span class="string">&#x27;2017-01-01&#x27;</span>:<span class="string">&#x27;2017-02-28&#x27;</span>]</span><br><span class="line">data5 = f.loc[<span class="string">&#x27;2017-12-01&#x27;</span>:<span class="string">&#x27;2017-12-31&#x27;</span>]</span><br><span class="line">data0 = pd.concat([data4,data5])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b=np.array([[<span class="number">11</span>,<span class="number">21</span>,<span class="number">31</span>],[<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.concatenate((a,b),axis=<span class="number">0</span>)</span><br><span class="line">array([[ <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>],</span><br><span class="line">       [<span class="number">11</span>, <span class="number">21</span>, <span class="number">31</span>],</span><br><span class="line">       [ <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.concatenate((a,b),axis=<span class="number">1</span>)  <span class="comment">#axis=1表示对应行的数组进行拼接</span></span><br><span class="line">array([[ <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>, <span class="number">11</span>, <span class="number">21</span>, <span class="number">31</span>],</span><br><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>]])</span><br><span class="line"></span><br><span class="line">ax.plot(pm25[<span class="number">0</span>:<span class="number">59</span>],data[<span class="number">0</span>:<span class="number">59</span>,<span class="number">10</span>],<span class="string">&#x27;.&#x27;</span>,c=<span class="string">&#x27;k&#x27;</span>,alpha=<span class="number">0.5</span>,label=<span class="string">&#x27;Winter&#x27;</span>)</span><br><span class="line">ax.plot(pm25[<span class="number">334</span>:<span class="number">365</span>],data[<span class="number">334</span>:<span class="number">365</span>,<span class="number">10</span>],<span class="string">&#x27;.&#x27;</span>,c=<span class="string">&#x27;k&#x27;</span>,alpha=<span class="number">0.5</span>)</span><br><span class="line">ax.plot(pm25[<span class="number">59</span>:<span class="number">151</span>],data[<span class="number">59</span>:<span class="number">151</span>,<span class="number">10</span>],<span class="string">&#x27;.&#x27;</span>,c=<span class="string">&#x27;b&#x27;</span>,alpha=<span class="number">0.5</span>,label=<span class="string">&#x27;Spring&#x27;</span>)</span><br><span class="line">ax.plot(pm25[<span class="number">151</span>:<span class="number">243</span>],data[<span class="number">151</span>:<span class="number">243</span>,<span class="number">10</span>],<span class="string">&#x27;.&#x27;</span>,c=<span class="string">&#x27;g&#x27;</span>,alpha=<span class="number">0.5</span>,label=<span class="string">&#x27;Summer&#x27;</span>)</span><br><span class="line">ax.plot(pm25[<span class="number">243</span>:<span class="number">334</span>],data[<span class="number">243</span>:<span class="number">334</span>,<span class="number">10</span>],<span class="string">&#x27;.&#x27;</span>,c=<span class="string">&#x27;r&#x27;</span>,alpha=<span class="number">0.5</span>,label=<span class="string">&#x27;Autumn&#x27;</span>)</span><br><span class="line"></span><br><span class="line">winter = np.concatenate((arrs[<span class="number">0</span>:<span class="number">59</span>],arrs[<span class="number">334</span>:<span class="number">365</span>]),axis=<span class="number">0</span>)</span><br><span class="line">spring = arrs[<span class="number">59</span>:<span class="number">151</span>]</span><br><span class="line">summer = arrs[<span class="number">151</span>:<span class="number">243</span>]</span><br><span class="line">autumn = arrs[<span class="number">243</span>:<span class="number">334</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(<span class="number">0</span>,<span class="number">31</span>,<span class="number">31</span>);  <span class="built_in">print</span>(x)</span><br><span class="line">y = np.<span class="built_in">sum</span>(data,axis=<span class="number">1</span>)</span><br><span class="line">x_new = np.linspace(<span class="number">0</span>,<span class="number">31</span>,<span class="number">100</span>)</span><br><span class="line">tck = interpolate.splrep(x,y)</span><br><span class="line">y_bspline = interpolate.splev(x_new,tck)</span><br><span class="line">ax2.plot(x,y,<span class="string">&quot;wo&quot;</span>,ms=<span class="number">3</span>)</span><br><span class="line">ax2.plot(x_new,y_bspline,<span class="string">&#x27;w-&#x27;</span>,linewidth=<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/data-analysis/" rel="tag"># data analysis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2022/10/23/hexoguide/" rel="prev" title="guide">
+                  <i class="fa fa-chevron-left"></i> guide
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2022/10/23/hexo%E5%A4%87%E4%BB%BD/" rel="next" title="hexo备份">
+                  hexo备份 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaodong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
