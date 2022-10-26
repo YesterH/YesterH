@@ -6,6 +6,80 @@ categories:
   - python
 ---
 
+# 读取文件
+
+```python
+# 经过pandas 读取后, 再写出,部分数据小数位数超长
+# 在read_csv时, 加入参数float_precision=“round_trip”, 所有数据会当做string读取, 使用时再进行相应的转换为float
+df = pd.read_csv('%s/%s_%s_%s.csv' %(outputdir, region, var, YYYYMM),float_precision="round_trip")
+
+# 读取csv
+pd.read_csv("filename",sep=',',header=None,index=False)  # sep 分隔符, index 指定index列名
+obs  = pd.read_csv("d04_chem.txt",delim_whitespace = True) # 空格分割
+# csv编码问题： VS code先用正确编码打开（GB…?），然后保存为正常编码（能正确显示GB…），然后重新保存为UTF-8格式，读取正常。
+
+# excel
+
+```
+# 常用的list
+- 月份
+```python
+months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+month  = ['01','02','03','04','05','06','07','08','09','10','11','12']
+
+```
+
+- 区域范围定义
+
+```python
+llcrnrlon,urcrnrlon,llcrnrlat, urcrnrlat = 113.,119., 34., 41.  # NCP
+llcrnrlon,urcrnrlon,llcrnrlat, urcrnrlat = 119.,122., 30., 33.  # YRD
+llcrnrlon,urcrnrlon,llcrnrlat, urcrnrlat = 112.,115.5,21.5,24.  # PRD
+llcrnrlon,urcrnrlon,llcrnrlat, urcrnrlat = 103.,107., 28.5,31.5 # SCB
+
+# ref. Li et al., PNAS, 2017
+cornersdict = { 'BTH':[114.,118., 37., 41.],
+                'YRD':[118.,122., 30., 33.],
+                'PRD':[112.,115.5,21.5,24.],
+                'SCB':[103.5,107., 28.5,31.5]}
+
+cornersdict = { 'CEC': [112., 122., 30., 41.], # from Shah et al., 2020, ACP, central-eastern China
+                'NCP': [113.75, 118.75, 35., 41.], # from Zhai et al., 2021, NG
+                'YRD': [118., 122., 30., 33.],
+                'PRD': [112., 115.5, 21.5, 24.],
+                'SCB': [103.5, 107., 28.5, 31.5]}
+
+```
+
+- 排序
+
+```python
+change['Region'] = change.index
+list_custom = ['337城市',"京津冀及周边","汾渭平原", '长三角', "成渝地区","珠三角"]
+change['Region'] = change['Region'].astype('category')
+change['Region'].cat.reorder_categories(list_custom, inplace=True)
+change.sort_values('Region', inplace=True)
+```
+
+- 配色
+```python
+cnames = {'EC': '$BC$',
+'OM': '$OM$',
+'SO4':'$SO_4^{2-}$',
+'NO3':'$NO_3^{-}$',
+'NH4':'$NH_4^{+}$',
+'Cl': '$Cl$',
+'Other':'$MI$'}
+
+cdict = {'EC': '#231916',
+'OM': '#009e42',
+'SO4':'#e51620',
+'NO3':'#212d8c',
+'NH4':'#ef9817',
+'Cl': '#d84d95',
+'Other':'#cbced2'}
+```
 
 
 # 指定顺序排序
@@ -23,8 +97,40 @@ regiondata.sort_values('Region', inplace=True)
 np.column_stack((a,b))  #作为列合并
 np.row_stack((a,b))  # 作为行
 ```
+## 拼接两段数据
 
-# 日期index
+```python
+data2 = f.loc['2017-06-01':'2017-08-30']
+data3 = f.loc['2017-09-01':'2017-11-30']
+data1 = f.loc['2017-03-01':'2017-05-31']
+data4 = f.loc['2017-01-01':'2017-02-28']
+data5 = f.loc['2017-12-01':'2017-12-31']
+data0 = pd.concat([data4,data5])
+
+>>> a=np.array([[1,2,3],[4,5,6]])
+>>> b=np.array([[11,21,31],[7,8,9]])
+>>> np.concatenate((a,b),axis=0)
+array([[ 1,  2,  3],
+       [ 4,  5,  6],
+       [11, 21, 31],
+       [ 7,  8,  9]])
+>>> np.concatenate((a,b),axis=1)  #axis=1表示对应行的数组进行拼接
+array([[ 1,  2,  3, 11, 21, 31],
+       [ 4,  5,  6,  7,  8,  9]])
+
+ax.plot(pm25[0:59],data[0:59,10],'.',c='k',alpha=0.5,label='Winter')
+ax.plot(pm25[334:365],data[334:365,10],'.',c='k',alpha=0.5)
+ax.plot(pm25[59:151],data[59:151,10],'.',c='b',alpha=0.5,label='Spring')
+ax.plot(pm25[151:243],data[151:243,10],'.',c='g',alpha=0.5,label='Summer')
+ax.plot(pm25[243:334],data[243:334,10],'.',c='r',alpha=0.5,label='Autumn')
+
+winter = np.concatenate((arrs[0:59],arrs[334:365]),axis=0)
+spring = arrs[59:151]
+summer = arrs[151:243]
+autumn = arrs[243:334]
+```
+
+# 日期
 
 ```python
 df = pd.read_csv(fname,index_col="datetime")
@@ -42,14 +148,29 @@ df.index = pd.to_datetime(df.time,format="%Y-%m-%dT%H:%M:%S", utc=True)
 df.index.tz_convert('Asia/Shanghai')
 ```
 
+- 某个月的开始和结束日期
 
+```python
+from dateutil.relativedelta import relativedelta
+start = datetime.datetime.strptime("2017-%s-01" %mon,"%Y-%m-%d")
+end = start + relativedelta(months=+1) + datetime.timedelta(days=-1)
+```
+
+- 时区转换
+
+```python
+data.index = pd.to_datetime(data.index,format='%Y%j%H').tz_localize('UTC').tz_convert("Asia/Shanghai")
+```
+
+- 设置时间格式
+
+```python
+res.index = res.index.strftime('%Y-%m-%d')
+```
 
 # 常见
 
 ```python
-# 经过pandas 读取后, 再写出,部分数据小数位数超长
-# 在read_csv时, 加入参数float_precision=“round_trip”, 所有数据会当做string读取, 使用时再进行相应的转换为float
-df = pd.read_csv('%s/%s_%s_%s.csv' %(outputdir, region, var, YYYYMM),float_precision="round_trip")
 
 # 三维计算相关系数
 def pearsonr_2D(x, y):
@@ -93,10 +214,6 @@ print df.iloc[1:3, 1: 3]
 
 
 
-读取csv
-pd.read_csv("filename",sep=',',header=None,index=False)  # sep 分隔符
-obs  = pd.read_csv("d04_chem.txt",delim_whitespace = True) 空格分割
-csv编码问题： VS code先用正确编码打开（GB…?），然后保存为正常编码（能正确显示GB…），然后重新保存为UTF-8格式，读取正常。
 
 获取数据框列名
 print(df.columns)   
@@ -124,29 +241,9 @@ cname = allsite.query("Area == @city").iloc[0,4]
 cname = allsite.query("Area == '北京'").iloc[0,0]
 ```
 
-# 日期处理
 
-- 某个月的开始和结束日期
 
-```python
-from dateutil.relativedelta import relativedelta
-start = datetime.datetime.strptime("2017-%s-01" %mon,"%Y-%m-%d")
-end = start + relativedelta(months=+1) + datetime.timedelta(days=-1)
-```
-
-- 时区转换
-
-```python
-data.index = pd.to_datetime(data.index,format='%Y%j%H').tz_localize('UTC').tz_convert("Asia/Shanghai")
-```
-
-- 设置时间格式
-
-```python
-res.index = res.index.strftime('%Y-%m-%d')
-```
-
-# list 转 dictionary @ data frame
+# list 转 data frame
 
 ```python
 keys = ["price","toalAmount"]
@@ -188,42 +285,7 @@ r3 = a * b  # [[2 8]]
 r4 = a / b  # [[0.5 0.5]]
 ```
 
-# 拼接两段数据
-
-```python
-data2 = f.loc['2017-06-01':'2017-08-30']
-data3 = f.loc['2017-09-01':'2017-11-30']
-data1 = f.loc['2017-03-01':'2017-05-31']
-data4 = f.loc['2017-01-01':'2017-02-28']
-data5 = f.loc['2017-12-01':'2017-12-31']
-data0 = pd.concat([data4,data5])
-
->>> a=np.array([[1,2,3],[4,5,6]])
->>> b=np.array([[11,21,31],[7,8,9]])
->>> np.concatenate((a,b),axis=0)
-array([[ 1,  2,  3],
-       [ 4,  5,  6],
-       [11, 21, 31],
-       [ 7,  8,  9]])
->>> np.concatenate((a,b),axis=1)  #axis=1表示对应行的数组进行拼接
-array([[ 1,  2,  3, 11, 21, 31],
-       [ 4,  5,  6,  7,  8,  9]])
-
-ax.plot(pm25[0:59],data[0:59,10],'.',c='k',alpha=0.5,label='Winter')
-ax.plot(pm25[334:365],data[334:365,10],'.',c='k',alpha=0.5)
-ax.plot(pm25[59:151],data[59:151,10],'.',c='b',alpha=0.5,label='Spring')
-ax.plot(pm25[151:243],data[151:243,10],'.',c='g',alpha=0.5,label='Summer')
-ax.plot(pm25[243:334],data[243:334,10],'.',c='r',alpha=0.5,label='Autumn')
-
-winter = np.concatenate((arrs[0:59],arrs[334:365]),axis=0)
-spring = arrs[59:151]
-summer = arrs[151:243]
-autumn = arrs[243:334]
-```
-
-
-
-
+# 画图平滑
 
 ```python
 x = np.linspace(0,31,31);  print(x)

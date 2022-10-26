@@ -1,5 +1,5 @@
 ---
-title: guide
+title: hexoguide
 date: 2022-10-23 17:19:11
 tags: other
 categories:
@@ -14,6 +14,29 @@ categories:
 
 - 参考 https://github.com/cocowool/hexo-image-link
 - 安装hexo-image-link
+
+#### 新建新的页面（tags, categories, about）
+
+```hexo new page tags```
+
+新建的页面出现在**souce**文件夹下，修改对应的index.md文件：
+
+```markdown
+title: tags
+date: 2022-10-24 09:02:56
+index: true
+layout: tags
+type: tags
+```
+
+#### ICARUS主题
+
+```shell
+$ npm install hexo-theme-icarus
+$ hexo config theme icarus
+# 配置文件为 _config.icarus.yml
+# reference： https://ppoffice.github.io/hexo-theme-icarus/
+```
 
 #### 新建博客
 
