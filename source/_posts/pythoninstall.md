@@ -1,6 +1,7 @@
 ---
 title: python安装
 date: 2022-10-25 09:09:45
+toc: true
 tags: software
 categories:
   - python

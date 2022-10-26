@@ -46,6 +46,7 @@ navbar:
         Archives: /archives
         Categories: /categories
         Tags: /tags
+        Gallery: /example
         About: /about
     links:
         Download on GitHub:
@@ -112,7 +113,7 @@ sidebar:
     left:
         sticky: false
     right:
-        sticky: false
+        sticky: true
 widgets:
     -
         position: left
@@ -141,7 +142,7 @@ widgets:
         #         icon: fas fa-rss
         #         url: /
     -
-        position: left
+        position: right
         type: toc
         index: true
         collapsed: true

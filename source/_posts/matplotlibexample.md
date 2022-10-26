@@ -1,12 +1,13 @@
 ---
 title: matplotlib example gallery
 date: 2022-10-25 09:18:14
+toc: true
 tags: visualization
 categories:
-  - python
+  - example
 ---
 
-#  [折线图](/blog/2022/10/25/曲线图/)
+#  [折线图](/blog/2022/10/25/折线图/)
 
 
 

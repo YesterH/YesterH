@@ -1,6 +1,7 @@
 ---
 title: matplot绘图设置
 date: 2022-10-25 08:57:33
+toc: true
 tags: visualization
 categories:
   - python

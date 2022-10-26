@@ -1,6 +1,7 @@
 ---
 title: numpy
 date: 2022-10-23 18:09:12
+toc: true
 tags: data analysis
 categories:
   - python

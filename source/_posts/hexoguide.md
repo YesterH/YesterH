@@ -1,6 +1,7 @@
 ---
 title: hexoguide
 date: 2022-10-23 17:19:11
+toc: true
 tags: other
 categories:
   - hexo
