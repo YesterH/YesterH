@@ -5,6 +5,7 @@ toc: true
 tags: other
 categories:
   - hexo
+excerpt: Hexo博客如何备份到Github
 ---
 
 # Hexo博客如何备份到Github

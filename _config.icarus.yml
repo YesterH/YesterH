@@ -46,7 +46,7 @@ navbar:
         Archives: /archives
         Categories: /categories
         Tags: /tags
-        Gallery: /example
+        Gallery: https://xiaodongnju.github.io/blog/2022/10/25/matplotlibexample/
         About: /about
     links:
         Download on GitHub:
@@ -207,7 +207,11 @@ plugins:
     hotjar:
         site_id: 
     katex: false
-    mathjax: false
+    mathjax: true
+    # MathJax Support
+    # mathjax:
+    #   enable: true
+    #   per_page: true
     outdated_browser: false
     progressbar: true
     statcounter:

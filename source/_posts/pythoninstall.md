@@ -5,6 +5,7 @@ toc: true
 tags: software
 categories:
   - python
+excerpt: 安装python及相关配置
 ---
 
 # requirements

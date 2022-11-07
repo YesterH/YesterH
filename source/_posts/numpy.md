@@ -5,6 +5,7 @@ toc: true
 tags: data analysis
 categories:
   - python
+excerpt: numpy 和 pandas 常见问题汇总
 ---
 
 # 读取文件
@@ -92,12 +93,41 @@ regiondata['Region'].cat.reorder_categories(list_custom, inplace=True)
 regiondata.sort_values('Region', inplace=True)
 ```
 
+# 获取数据落在bins区间的索引 - 用于按照污染物等级统计分析
+
+```python
+levels = [0, 100, 160, 200, 1000]
+O3 = data["O3"]
+inds = np.digitize(O3,bins = levels)
+
+for i in range(1,5):
+    print(i, O3[inds==i].mean())
+```
+
 # 合并数组
 
 ```python
 np.column_stack((a,b))  #作为列合并
 np.row_stack((a,b))  # 作为行
 ```
+## 数据框添加数据
+
+```python
+df = pd.concat([df,pd.DataFrame.from_records([{ 
+    "a":amax,
+    "b":bmax,
+    "sdate":df.index[i],
+    "edate":df.index[i+tmax-1],
+    'CO' :df["CO"].iloc[i:i+tmax].mean(),
+    'NO2':df["NO2"].iloc[i:i+tmax].mean(),
+    'O3' :df["O3"].iloc[i:i+tmax].mean(),
+    "PM2.5":df["PM2.5"].iloc[i:i+tmax].mean(),
+    'SO2':df["SO2"].iloc[i:i+tmax].mean()
+}])])
+```
+
+
+
 ## 拼接两段数据
 
 ```python
@@ -107,6 +137,8 @@ data1 = f.loc['2017-03-01':'2017-05-31']
 data4 = f.loc['2017-01-01':'2017-02-28']
 data5 = f.loc['2017-12-01':'2017-12-31']
 data0 = pd.concat([data4,data5])
+
+pd.concat([read_json(i) for i in adcodes],ignore_index=True)
 
 >>> a=np.array([[1,2,3],[4,5,6]])
 >>> b=np.array([[11,21,31],[7,8,9]])
