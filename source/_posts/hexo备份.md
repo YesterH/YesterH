@@ -82,7 +82,7 @@ git push origin hexo
 ```csharp
 hexo clean
 git add .
-git commit -m "备份"
+git commit -m "2022"
 git push
 hexo g & hexo d
 ```

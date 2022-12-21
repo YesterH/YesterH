@@ -30,6 +30,10 @@ months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec
 
 month  = ['01','02','03','04','05','06','07','08','09','10','11','12']
 
+seasondict = { 'Spring':[3,4,5],
+               'Summer':[6,7,8],
+               'Autumn':[9,10,11],
+               'Winter':[1,2,12]}
 ```
 
 - 区域范围定义

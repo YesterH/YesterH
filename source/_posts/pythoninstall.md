@@ -8,21 +8,58 @@ categories:
 excerpt: 安装python及相关配置
 ---
 
+# conda安装库的规则
+
+- channel的配置
+
+  - 默认的conda channel是defaults，但这个channel的代码包不全。我的建议使用conda-forge channel，并设置严格优先使用conda-forge
+
+  - 设置镜像的时候，main和free结尾的对应defaults,所以需要将conda-forge的优先级设置为最高，比如用清华源可以如下设置
+
+  - ```shell
+    (atmos) xdxie@admin[~]$ cat ~/.condarc
+    channels:
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
+      - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+      - conda-forge
+      - defaults
+    show_channel_urls: true
+    channel_priority: strict
+    always_yes: true
+    ```
+
+  - 查看可用的版本
+  
+    - **`conda search keras`**
+  
+  - 安装特定的版本
+  
+    - conda install -c conda-forge keras=1.0.7=py27_0 
+    - 
+  
+  - xgboost                        1.1.1  py36h831f99a_0  anaconda/cloud/conda-forge
+    xgboost                        1.1.1  py37h3340039_0  anaconda/cloud/conda-forge
+    xgboost                        1.1.1  py38h950e882_0  anaconda/cloud/conda-forge
+
 # requirements
 
+- conda install --yes --file requirements.txt
+
 ```python
-numpy
-pandas
-xarray
-Cartopy
-matplotlib==3.2.2
-notebook
+wrf-python
+cartopy
 cmaps
-cycler
-scipy
 seaborn
-Shapely
-jupyterlab
+pygrib
+netCDF4
+
+# xgboost 版本1.1.1
+xgboost=1.1.1
 
 
 conda install --yes --file requirements.txt
@@ -126,6 +163,24 @@ conda config --set show_channel_urls yes
 conda config --show channels
 ```
 链接：https://www.jianshu.com/p/7e663bb0d904
+
+
+
+```shell
+
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - conda-forge
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+  - esri
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - defaults
+```
 
 
 
