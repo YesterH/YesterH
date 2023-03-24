@@ -47,6 +47,7 @@ navbar:
         Categories: /categories
         Tags: /tags
         Gallery: https://xiaodongnju.github.io/blog/2022/10/25/matplotlibexample/
+        Paper: /categories/paper
         About: /about
     links:
         Download on GitHub:

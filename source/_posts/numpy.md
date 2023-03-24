@@ -97,6 +97,16 @@ regiondata['Region'].cat.reorder_categories(list_custom, inplace=True)
 regiondata.sort_values('Region', inplace=True)
 ```
 
+# pandas按照根据指定列值插值
+
+```python
+# 根据PM2.5的时间序列对其他组分进行插值
+data = pd.read_csv("ObservationData/OBS.csv",index_col='PM25')
+data.interpolate(method='index').to_csv("ObservationData/Obs_taizhou.csv")
+```
+
+
+
 # 获取数据落在bins区间的索引 - 用于按照污染物等级统计分析
 
 ```python

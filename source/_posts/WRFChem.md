@@ -185,13 +185,123 @@ excerpt: WRF/Chem 模式
 
       
 
-# 光学性质
+# 气溶胶光学性质的计算
+
+## 总体思路（以MOSAIC方案为例）
+
+- 相同bin中内混，不同bin之间外混；对特定的bin[i]：
+  1. 计算各组分质量$M_{i,j}$和数浓度$N_i$
+  2. 根据质量和数浓度计算体积$V_{i,j}$和直径$D_{p,i}$
+  3. 计算负折射指数(这里会根据混合方式的不同[表现在模式中即option_method]分别计算)：
+     1. volume averaging approximation: 总的负折射率等于质量加权平均
+     2. Maxwell-Garnett approximation：根据Maxwell-Garnett计算
+     3. shell-core mixing：分别计算核和壳的负折射指数
+  4. 调用mie散射算法计算总的吸收效率、散射效率和不对称因子（这里会根据option_mie选项有两种方法）：
+     1. option_mie=1  切比雪夫多项式近似... Chebyshev economization 即简化了Mie散射计算过程
+     2. option_mie=2 完整的Mie散射算法
+
+## 程序中细节说明
+
+- 气溶胶光学性质参数的计算程序
+
+  - optical_driver.F 
+  - module_optical_averaging.F 
+  - 重要的子程序 
+
+  1. subroutine optical_prep_sectional， 准备Mie散射计算需要的相关数据
+
+     - 根据气溶胶组分数据计算下列变量：
+
+     - ```fortran
+       radius_core,radius_wet, number_bin,                     &
+       swrefindx,swrefindx_core,swrefindx_shell,               &
+       lwrefindx,lwrefindx_core,lwrefindx_shell
+       
+       !	number_bin_col(nbin_a,kmaxd) --   number density in layer, #/cm^3
+       !	radius_wet_col(nbin_a,kmaxd) -- wet radius, shell, cm
+       !       radius_core_col(nbin_a,kmaxd) -- core radius, cm; NOTE:
+       ```
+
+     - **如果需要修改Mie散射计算结果，可以在此处增加相关变量**
+
+  2. subroutine optical_averaging ，其中，会调用
+
+     - optical_prep_sectional 子程序： 计算*3-D arrays for refractive index, wet radius, and aerosol number then passed into mieaer_sectional*
+     - mieaer程序： *produces vertical profiles of aerosol optical properties for 4 wavelengths that are put into 3-D arrays and passed back up to chem_driver.F*，其中
+
+     - *tauaer\*, waer\*, gaer\* passed to module_ra_gsfcsw.F*
+
+     - *tauaer\*, waer\*, gaer\*, l2-l7 passed to module_phot_fastj.F*
+
+- 输出变量说明：
+
+  - ```fortran
+    ! OUTPUT: saved in module_fastj_cmnmie
+    !   real tauaer  ! aerosol optical depth 气溶胶光学厚度
+    !        waer    ! aerosol single scattering albedo 单次散射反照率
+    !        gaer    ! aerosol asymmetery factor 不对称因子
+    !        extaer  ! aerosol extinction 消光
+    !        l2,l3,l4,l5,l6,l7 ! Legendre coefficients, numbered 0,1,2,......  勒让德系数
+    !        sizeaer ! average wet radius 平均湿半径
+    !	 bscoef ! aerosol backscatter coefficient with units km-1 * steradian -1  JCB 2007/02/01 气溶胶后向散射系数
+    ```
+
+- 问题：
+
+  - **如果要修改MIE散射的计算结果，可以在 call mieaer 语句之后添加修改**
+
+  - 怎么在wrfout中输出tauaer等参数？grid%tauaer1?改register文件， namelist.input中设置  **opt_pars_out             = 1,**
+
+  - 计算AOD： To calculate AOD, you just need to integrate the extinction coef throughout the entire model column; i.e. multiple the extinction coef by the thickness of the model box and sum all the boxes:
+
+    AOD = ∑ EXT(l) * dz(l)
+
+    With these namelist options, you should have EXTCOEF55 variable in the output that represents the exticntion coefficient at 550 nm in the units of km^-1. You need to calculate layer thickness (can be done by using PH and PHB variables from the WRF-Chem output). The final step is to calculate AOD as multiplication of EXTCOEF55 with the layer thickness (make sure you have it in km). 
+
+  - Alternatively, **you can add "tauaer1, tauaer2, tauaer3, and tauaer4" to the model output using runtime I/O option**. They represent layer AOD at 300, 400, 600, and 999 nm. The vertical integral of these quantities will give you total AOD at these wavelengths and then you can use the Angstrom power law to derive AOD at any wavelength. 
+
+  - ```matlab
+    ########################################### Calculation Using MATLAB ####################################################
+    
+    Height_in_Km = ((PH + PHB)/(9.81))*(1000) ##### This will calculate the height between WRF levels in Km where PH = Perturbation Geopotential and PHB = Base-State Geopotential.
+    
+    Then if you have number of levels in your output is suppose K
+    
+    for X=1:K
+        Distance_Between_Levels (:,:,X) = Height_in_Km(:,:,X+1) - Height_in_Km(:,:,X);
+        EXTCOF55_Converted(:,:,X) = (EXTCOF55(:,:,X).*Distance_Between_Levels(:,:,X));
+    end
+    
+    AOD(:,:)= nansum(EXTCOF55_Converted,3);  ############## Mean of the Level Dimension #########
+    
+    #################################################### END ##############################################################
+    ```
+
+  - The way I calculate AOD is by using the variables named TAUAER1, TAUAER2, TAUAER3 and TAUAER4.
+
+    These variables are the aerosol optical depth of each model layer at 300, 400, 600 and 1000 nm, respectively. To calculate the optical depth at another wavelength then you have to calculate the Angstrom exponent following the formula shown in https://en.wikipedia.org/wiki/Angstrom_exponent
+
+    E.g. I calculate the total AOD in the column at 550 nm using TAUAER2 and TAUAER3 because the 550 nm wavelength falls between 400 and 600 nm:
+
+    angstrom_exponent =  -( log(TAUAER2) - log(TAUAER3) ) / log(400/600) 
+
+    AOD550_3D     =  TAUAER2 * ( (400/550) ^ angstrom_exponent )
+
+    AOD550_2D     =  sum(AOD550_2D,3)
+
+    AOD550_3D is the 3-dimensional AOD where you have an optical depth for each layer of your model. Then, the total column AOD is simply the sum across the third dimension.
+
+    If the variables TAUAER<n> are not listed in your model outputs, then you need to modify the registry file for chemistry (Registry/registry.chem)and compile again:
+
+    state   real  tauaer1     ikj   misc     1     -    rh    "TAUAER1"        "bin 1 layer optical thickness" "?"
+
+    state   real  tauaer2     ikj   misc     1     -    rh    "TAUAER2"        "bin 2 layer optical thickness" "?"
+
+    state   real  tauaer3     ikj   misc     1     -    rh    "TAUAER3"        "bin 3 layer optical thickness" "?"
+
+    state   real  tauaer4     ikj   misc     1     -    rh    "TAUAER4"        "bin 4 layer optical thickness" "?"
 
 ```fortran
-! key files
-optical_driver.F
-module_optical_averaging.F
-
 ! key options for aerosol optical properities 
 aer_op_opt  ! 1-5 设置光学性质计算方法
 			! 根据aer_op_opt 设置 option_method 和 option_mie. 
@@ -219,6 +329,8 @@ aer_op_opt  ! 1-5 设置光学性质计算方法
        option_mie=2
      CASE DEFAULT
 
+! option_mie    选择怎么计算mie散射
+! option_method 选择怎么计算光学性质
 
 ! namelist.input 选项
 aer_op_opt  = 1 aerosol optical properties calculated based upon volume approximation
@@ -229,21 +341,17 @@ aer_op_opt  = 1 aerosol optical properties calculated based upon volume approxim
 
 ```
 
-## WRF-Chem中气溶胶光学性质的三种计算方法：
+-  说明
+  - **[Bond et al., 2013, JGR]** 提到: using the Bond and Bergstrom [2006] refractive index and density, **Adachi et al. [2010]** calculated $MAC_{BC}$ for uncoated spheres as 6.4 $m^2g^{-1}$, with increases for volume mixing (13.6 $m^2g^{-1}$), core shell (13.3 $m^2g^{-1}$), Maxwell-Garnet effective medium approximation (12.0 $m^2g^{-1}$), and realistic coated BC particles (9.9 $m^2g^{-1}$) at 550 nm wavelength.
 
-1. volume averaging approximation
-2. Maxwell-Garnett approximation
-3. shell-core mixing
-   - **[Bond et al., 2013, JGR]** 提到: using the Bond and Bergstrom [2006] refractive index and density, **Adachi et al. [2010]** calculated $MAC_{BC}$ for uncoated spheres as 6.4 $m^2g^{-1}$, with increases for volume mixing (13.6 $m^2g^{-1}$), core shell (13.3 $m^2g^{-1}$), Maxwell-Garnet effective medium approximation (12.0 $m^2g^{-1}$), and realistic coated BC particles (9.9 $m^2g^{-1}$) at 550 nm wavelength.
+  - Climate models assume soot particles are spherical and  
 
-- Climate models assume soot particles are spherical and  
+    (1) uncoated (**external‐mixing model**), 
 
-  (1) uncoated (**external‐mixing model**), 
+    (2) concentrically coated (**core‐shell model**), 
 
-  (2) concentrically coated (**core‐shell model**), 
+    (3) **homogeneously mixed** with other materials on a molecular scale (**volume‐mixing model)**,
 
-  (3) **homogeneously mixed** with other materials on a molecular scale (**volume‐mixing model)**,
+    (4) mixed with other aerosol particles according to rules such as the **Maxwell‐Garnet effective medium approximation** (MGEMA), which assumes that isolated soot spherules are suspended in an embedding material
 
-  (4) mixed with other aerosol particles according to rules such as the **Maxwell‐Garnet effective medium approximation** (MGEMA), which assumes that isolated soot spherules are suspended in an embedding material
-
-![image-20221221145507232](WRFChem/image-20221221145507232.png)
+  ![image-20221221145507232](WRFChem/image-20221221145507232.png)
