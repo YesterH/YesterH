@@ -8,9 +8,11 @@ categories:
 excerpt: WRF/Chem 模式运行流程
 ---
 
-# 目录说明
+# WRFChem运行
 
--  程序和脚本在 /home/xdxie/data/wrfchemdata/beijing201612
+## 目录说明
+
+-  运行wrfchem的程序和脚本在 /home/xdxie/data/wrfchemdata/beijing201612
 -  只需要复制 presource  scripts  WPS WRFChem-3.9.1-revised这几个文件夹
 
  ```shell
@@ -34,7 +36,7 @@ excerpt: WRF/Chem 模式运行流程
           data/basecase/figures：出图文件
  ```
 
-# 运行流程
+## 运行流程
 
 - 第一次运行需要设置domain和生成geo_em文件，WRF培训时有介绍
 
@@ -56,7 +58,7 @@ step7_wrf_from_existing_case：当step1-5不需要重新运行时，快速开始
 
   
 
-# 注意事项
+## 注意事项
 
 - 下载camchem数据，路径```https://www.acom.ucar.edu/cam-chem/cam-chem.shtml```， 根据你的研究区域和时间下载对应文件，如```lat,10.0,60.0 lon,60.0,160.0 ```
 - ```chem_opt=203: SAPRC99_MOSAIC_8BIN_VBS2_AQ_KPP; SAPRC99 Chemistry with MOSAIC using KPP library. The MOSAIC aerosols uses 8 sectional aerosol bins and includes volatility basis set (VBS) for organic aerosol evolution. Also include aqueous phase chemistry.``` 在李楠的版本中，该选项对应MOSAIC_4bin
@@ -66,3 +68,25 @@ step7_wrf_from_existing_case：当step1-5不需要重新运行时，快速开始
 
 
 
+# WRFChem后处理
+
+## 基本思路
+
+- wrfout文件很大，为了方便提取，第一步将需要的变量从wrfout文件中提取出来，生成新的nc文件 （step1_extra2nc.py）
+- 然后再对新的nc文件处理 （step2,3,4等）
+
+## 初步脚本（需要不断完善）
+
+- 路径```/home/xdxie/archive/tools/python_script/wrfchem_tools/extract_wrfchem```, 会随时修改，建议copy到自己的目录下
+- 脚本说明：
+
+```shell
+config.wrfchem.S99M8binVBS2AQ # 总的配置文件，需要用户自己修改，包括路径、时间、站点、变量等
+step1_extra2nc.py # 根据上面配置文件中的变量定义从wrfout中提取变量到nc， 放在data/basecase/combine文件夹
+step2.xxx.py # 从上面的nc文件中提取站点的数据，包括气象和污染物的，以及观测的（观测的只写了污染物的脚本，气象的没写要自己弄）
+step3.xxx.py # 一些画图脚本，计算统计参数脚本，不够完善，自己改改
+
+csv文件 # 站点信息的文件和城市经纬度信息文件
+```
+
+- 画空间图的脚本，```/home/xdxie/archive/tools/python_script/wrfchem_tools/regional.plot```， 用ncl的程序就行
