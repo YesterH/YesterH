@@ -48,8 +48,11 @@ excerpt: WRF/Chem 模式运行流程
   step5_mozbc: 使用camchem数据添加边界文件
   step6_wrf： 运行wrf.exe
   step7_wrf_from_existing_case：当step1-5不需要重新运行时，快速开始其他case的运行
-  
   ```
+  
+- 运行的时候每次打开一个step，1-5步骤可以直接ssh到一个计算节点上，输入```./autorun.wrfchem.sh```运行
+
+- setp6或者step7需要使用pbs提交，修改wrfchem.jobs，然后在登录节点上输入```qsub wrfchem.jobs```提交任务
 
   
 
