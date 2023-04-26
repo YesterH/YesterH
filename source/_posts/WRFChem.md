@@ -2,7 +2,7 @@
 title: WRF/Chem
 date: 2022-10-25 09:18:14
 toc: true
-tags: WRF
+tags: WRF-Chem
 categories:
   - model
 excerpt: WRF/Chem 模式
@@ -11,6 +11,11 @@ excerpt: WRF/Chem 模式
 # 安装
 
 - 问题1：configure之后需要修改下configure.wrf文件，mpif90改成mpiifort
+- 人为排放处理需要matlab，必须在admin上运行
+
+# WRF-Chem 文档说明
+
+- Grell 2005 Fully coupled ‘‘online’’ chemistry within the WRF model; AE
 - 
 
 # 运行
@@ -141,12 +146,17 @@ excerpt: WRF/Chem 模式
           print*,dlo_sect
           print*,dhi_sect
           end
-          
+      
     ! 输出为
     3.9062502E-06  7.8125004E-06  1.5625001E-05  3.1250001E-05  6.2500003E-05  1.2500001E-04  2.5000001E-04  5.0000002E-04
     7.8125004E-06  1.5625001E-05  3.1250001E-05  6.2500003E-05  1.2500001E-04  2.5000001E-04  5.0000002E-04  1.0000000E-03
-    ```
-
+    
+  ! 4 bins
+        3.9062502E-06  1.5625001E-05  6.2500003E-05  2.5000001E-04
+        1.5625001E-05  6.2500003E-05  2.5000001E-04  1.0000000E-03
+      
+      ```
+      
   - 
 
   - ![image-20221213194516063](WRFChem/image-20221213194516063.png)
@@ -338,7 +348,7 @@ aer_op_opt  = 1 aerosol optical properties calculated based upon volume approxim
             = 3 aerosol optical properties calculated based upon exact volume approximation
             = 4 aerosol optical properties calculated based upon exact Maxwell approximation
             = 5 aerosol optical properties calculated based upon exact shell approximation
-
+! 只有1和2选项才计算长波,后面三个只算短波
 ```
 
 -  说明
