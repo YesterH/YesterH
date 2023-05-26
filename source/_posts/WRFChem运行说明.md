@@ -15,7 +15,7 @@ excerpt: WRF/Chem 模式运行流程
 -  运行wrfchem的程序和脚本在 /home/xdxie/data/wrfchemdata/beijing201612
 -  只需要复制 presource  scripts  WPS WRFChem-3.9.1-revised这几个文件夹
 
- ```shell
+```shell
   WPS/WRFChem-3.9.1-revised: 主程序
   （WRF文件夹是WRF391 default版本，WRFChem-3.9.1-revised是WRF391李楠组版本，修改了SO4/GLY，见Li et al, EI，2022）
   
@@ -34,7 +34,7 @@ excerpt: WRF/Chem 模式运行流程
   		data/basecase/combine：处理后的wrfout文件
           data/basecase/results：提取的文本文件
           data/basecase/figures：出图文件
- ```
+```
 
 ## 运行流程
 

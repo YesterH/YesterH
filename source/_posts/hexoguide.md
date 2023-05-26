@@ -44,6 +44,36 @@ $ hexo config theme icarus
 
 ``` hexo new name```
 
+#### 增加宽度
+
+如要改变挂件或主内容宽度，编辑`<icarus_directory>/layout/common/widgets.jsx`和`<icarus_directory>/layout/layout.jsx`。 在这些文件中找到诸如`is-12`，`is-8-tablet`，和`is-4-widescreen`这样的CSS类名。 CSS类名中的数字标志着一个挂件或主内容所占据的栏数量。 数字后的屏幕尺寸，如`tablet`和`widescreen`，指代着栏数量生效的屏幕尺寸条件。 修改类名中的数字使主内容栏的栏数量和所有挂件栏的栏数量在相同屏幕尺寸下相加等于12。
+
+例如，为使主内容栏在宽屏(`widescreen`)下更宽，你可以做出如下修改：
+
+```
+<icarus_directory>/layout/layout.jsx
+
+ <div class={classname({
+     column: true,
+     'order-2': true,
+     'column-main': true,
+     'is-12': columnCount === 1,
+-    'is-8-tablet is-8-desktop is-8-widescreen': columnCount === 2,
++    'is-8-tablet is-8-desktop is-9-widescreen': columnCount === 2,
+     'is-8-tablet is-8-desktop is-6-widescreen': columnCount === 3
+<icarus_directory>/layout/common/widgets.jsx
+
+ function getColumnSizeClass(columnCount) {
+     switch (columnCount) {
+         case 2:
+-            return 'is-4-tablet is-4-desktop is-4-widescreen';
++            return 'is-4-tablet is-4-desktop is-3-widescreen';
+         case 3:
+             return 'is-4-tablet is-4-desktop is-3-widescreen';
+```
+
+你可以参考[Bulma文档](https://bulma.io/documentation/columns/sizes/)来获取更多关于布局系统的细节。
+
 # 在Hexo中渲染MathJax数学公式
 
 在用markdown写技术文档时，免不了会碰到数学公式。常用的Markdown编辑器都会集成[Mathjax](https://link.jianshu.com?t=https%3A%2F%2Fwww.mathjax.org%2F)，用来渲染文档中的类Latex格式书写的数学公式。基于Hexo搭建的个人博客，默认情况下渲染数学公式却会出现各种各样的问题。
