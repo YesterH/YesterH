@@ -1,11 +1,11 @@
 ---
-title: CMAQ机制说明
+title: CMAQ不同版本SOA机制
 date: 2022-10-25 09:18:14
 toc: true
 tags: CMAQ
 categories:
   - model
-excerpt: CMAQ化学机制介绍
+excerpt: CMAQ不同版本SOA机制
 ---
 
 ## 不同版本SOA机制
