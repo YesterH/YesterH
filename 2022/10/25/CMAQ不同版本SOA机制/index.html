@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>CMAQ不同版本SOA机制 - Hi there.</title><link rel="manifest" href="/blog/manifest.json"><meta name="application-name" content="Hi there."><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hi there."><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="CMAQ不同版本SOA机制"><meta property="og:type" content="blog"><meta property="og:title" content="CMAQ不同版本SOA机制"><meta property="og:url" content="https://xiaodongnju.github.io/blog/2022/10/25/CMAQ%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACSOA%E6%9C%BA%E5%88%B6/"><meta property="og:site_name" content="Hi there."><meta property="og:description" content="CMAQ不同版本SOA机制"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xiaodongnju.github.io/blog/img/og_image.png"><meta property="article:published_time" content="2022-10-25T01:18:14.000Z"><meta property="article:modified_time" content="2023-09-09T14:50:01.013Z"><meta property="article:author" content="Xiaodong"><meta property="article:tag" content="CMAQ"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xiaodongnju.github.io/blog/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xiaodongnju.github.io/blog/2022/10/25/CMAQ%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACSOA%E6%9C%BA%E5%88%B6/"},"headline":"CMAQ不同版本SOA机制","image":["https://xiaodongnju.github.io/blog/img/og_image.png"],"datePublished":"2022-10-25T01:18:14.000Z","dateModified":"2023-09-09T14:50:01.013Z","author":{"@type":"Person","name":"Xiaodong"},"publisher":{"@type":"Organization","name":"Hi there.","logo":{"@type":"ImageObject","url":"https://xiaodongnju.github.io/img/logo.svg"}},"description":"CMAQ不同版本SOA机制"}</script><link rel="canonical" href="https://xiaodongnju.github.io/blog/2022/10/25/CMAQ%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACSOA%E6%9C%BA%E5%88%B6/"><link rel="icon" href="/blog/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/blog/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/blog/"><img src="/blog/img/logo.svg" alt="Hi there." height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/blog/">Home</a><a class="navbar-item" href="/blog/archives">Archives</a><a class="navbar-item" href="/blog/categories">Categories</a><a class="navbar-item" href="/blog/tags">Tags</a><a class="navbar-item" href="https://xiaodongnju.github.io/blog/2022/10/25/matplotlibexample/">Gallery</a><a class="navbar-item" href="/blog/categories/paper">Paper</a><a class="navbar-item" href="/blog/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/xiaodongnju"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-25T01:18:14.000Z" title="2022/10/25 09:18:14">2022-10-25</time>发表</span><span class="level-item"><time dateTime="2023-09-09T14:50:01.013Z" title="2023/9/9 22:50:01">2023-09-09</time>更新</span><span class="level-item"><a class="link-muted" href="/blog/categories/model/">model</a></span><span class="level-item">10 分钟读完 (大约1531个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">CMAQ不同版本SOA机制</h1><div class="content"><h2 id="不同版本SOA机制"><a href="#不同版本SOA机制" class="headerlink" title="不同版本SOA机制"></a>不同版本SOA机制</h2><h3 id="物种对比"><a href="#物种对比" class="headerlink" title="物种对比"></a>物种对比</h3>
+<h3 id="CMAQ-v4-7"><a href="#CMAQ-v4-7" class="headerlink" title="CMAQ v4.7"></a>CMAQ v4.7</h3><ul>
+<li><p>参考Carlton et al., 2010, EST. <strong>Model Representation of Secondary Organic Aerosol in CMAQv4.7</strong></p>
+</li>
+<li><p>In CMAQv4.7, SOA is produced from an expanded list of precursors (Table 1) and can be formed via both gas- and</p>
+<p>aqueous-phase oxidation processes, as well as aerosol-phase reactions. Seven of the 19 secondary organic PM species are</p>
+<p>treated as nonvolatile (dark-shaded rectangles in Figure 1). The 12 remaining species are semivolatile and have ∆Hvap</p>
+<p>values reduced in accordance with recent experimental data.</p>
+
+
+
+<ul>
+<li>半挥发的部分会发生凝聚相低聚反应生成AOLGA 和AOLGB,  GLY和MGLY是云中的液相反应</li>
+</ul>
+</li>
+</ul>
+<h3 id="CMAQ-v5-1"><a href="#CMAQ-v5-1" class="headerlink" title="CMAQ v5.1"></a>CMAQ v5.1</h3><ul>
+<li>参考Appel et al., 2017, GMD <strong>Description and evaluation of the Community Multiscale Air Quality (CMAQ) modeling system version 5.1</strong></li>
+<li>在CMAQ v5.0.2 （和4.7改变不大）基础上修改</li>
+<li></li>
+<li>更新了isoprene生成SOA的过程（Pye et al., 2013, EST)：isoprene和OH的反应产物ISOPO2在低/高NOx条件下分别和HO2和NO反应生成IEPOX和MAE（以及HMML），随后IEPOX、MAE和HMML通过非均相反应生成：AIETETJ   AIEOSJ   ADIMJ     AIMGAJ    AIMOSJ    </li>
+<li></li>
+<li>更新有机硝酸盐部分（Pye et al., 2015, EST）：<ul>
+<li>isoprene和NO3反应生成ISOPNN，进一步生成半挥发性硝酸盐： AISOPNNJ </li>
+<li>terprene和NO3反应生成MTNO3，进一步生成半挥发性硝酸盐：AMTNO3J  </li>
+<li>AISOPNNJ和AMTNO3J  会非均相水解生成AMTHYDJ</li>
+</ul>
+</li>
+<li>增加GLY和MGLY非均相过程，生成AGLYJ</li>
+<li>5.1版本SOA生成概念图（Pye et al., 2017, ACP）</li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<h3 id="CMAQ-v5-2"><a href="#CMAQ-v5-2" class="headerlink" title="CMAQ v5.2"></a>CMAQ v5.2</h3><ul>
+<li><p>参考 <a target="_blank" rel="noopener" href="https://github.com/USEPA/CMAQ/blob/5.2/CCTM/docs/Release_Notes/README.md">CMAQ/CCTM/docs/Release_Notes/README.md at 5.2 · USEPA/CMAQ · GitHub</a></p>
+</li>
+<li><p>主要参考文献（Murphy et al., 2017, ACP）（Pye et al., 2017, ACP）</p>
+</li>
+<li><p>更新POA部分，5.1中POA分为POC+NCOM, 5.2中考虑了不同的挥发性的差异（Murphy et al., 2017, ACP）</p>
+<ul>
+<li><p>POA多级氧化</p>
+<ul>
+<li><p>POA划分为不同的挥发性,存在gas和aerosol两种相态：低挥发性V/ALVPO1, 半挥发性V/ASVPO(1,2,3),中等挥发性V/AIVPO(1); </p>
+</li>
+<li><p>部分gas phase POA本身通过气粒分配生成aerosol phase POA（ALVPO1J等）</p>
+</li>
+<li><p>气相机制中POA(g)老化生成对应的氧化产物VLVPO1 等，最后气粒分配生成SOA（ALVOO1J等）</p>
+</li>
+<li><p>```fortran<br>! part 1. emissions in GC.nml<br>‘VLVPO1:218:POC:1.0:VD_ORA:1:::ADIPIC_ACID:1:VLVPO1::Yes:Yes:Yes:Yes’,<br>‘VSVPO1:230:POC:1.0:VD_ORA:1:::ADIPIC_ACID:1:VSVPO1::Yes:Yes:Yes:Yes’,<br>‘VSVPO2:241:POC:1.0:VD_ORA:1:::ADIPIC_ACID:1:VSVPO2::Yes:Yes:Yes:Yes’,<br>‘VSVPO3:253:POC:1.0:VD_ORA:1:::ADIPIC_ACID:1:VSVPO3::Yes:Yes:Yes:Yes’,<br>‘VIVPO1:266:POC:1.0:VD_ORA:1:::ADIPIC_ACID:1:VIVPO1::Yes:Yes:Yes:Yes’,<br>‘VLVOO1:136:::VD_ORA:1:::ADIPIC_ACID:1:VLVOO1::Yes:Yes:Yes:Yes’,<br>‘VLVOO2:136:::VD_ORA:1:::ADIPIC_ACID:1:VLVOO2::Yes:Yes:Yes:Yes’,<br>‘VSVOO1:135:::VD_ORA:1:::ADIPIC_ACID:1:VSVOO1::Yes:Yes:Yes:Yes’,<br>‘VSVOO2:135:::VD_ORA:1:::ADIPIC_ACID:1:VSVOO2::Yes:Yes:Yes:Yes’,<br>‘VSVOO3:134:::VD_ORA:1:::ADIPIC_ACID:1:VSVOO3::Yes:Yes:Yes:Yes’,</p>
+<p>! part 2. reaction with OH to produce PCSOARXN in mech.def<br>! Aging with Func. and Frag. (Donahue et al. 2012)<br><POA_AGE1> VLVPO1 + OH = OH</p>
+<pre><code>  + 0.4857 * VLVPO1 + 0.0062 * VSVPO1
+  + 0.0025 * VSVPO2 + 0.0026 * VSVPO3
+  + 0.0023 * VIVPO1 + 0.2944 * VLVOO1
+  + 0.2021 * VLVOO2 + 0.0019 * VSVOO2
+  + 0.0023 * VSVOO3                   #4.0e-11;
+</code></pre><p><POA_AGE2> VSVPO1 + OH = OH</p>
+<pre><code>  + 0.3003 * VLVPO1 + 0.2862 * VSVPO1
+  + 0.0041 * VSVPO2 + 0.0035 * VSVPO3
+  + 0.2239 * VLVOO1 + 0.1820 * VLVOO2 #4.0e-11;
+</code></pre><p><POA_AGE3> VSVPO2 + OH = OH</p>
+<pre><code>  + 0.3856 * VLVPO1 + 0.0950 * VSVPO1
+  + 0.1373 * VSVPO2 + 0.0005 * VSVPO3
+  + 0.2051 * VLVOO1 + 0.1764 * VLVOO2 #4.0e-11;
+</code></pre><p><POA_AGE4> VSVPO3 + OH = OH</p>
+<pre><code>  + 0.2181 * VLVPO1 + 0.3063 * VSVPO1
+  + 0.0153 * VSVPO2 + 0.1043 * VSVPO3
+  + 0.1893 * VLVOO1 + 0.1668 * VLVOO2 #4.0e-11;
+</code></pre><p><POA_AGE5> VIVPO1 + OH = OH</p>
+<pre><code>  + 0.2412 * VLVPO1 + 0.2089 * VSVPO1
+  + 0.3000 * VSVPO2 + 0.2028 * VLVOO1
+  + 0.0471 * VLVOO2                   #4.0e-11;
+</code></pre><p><POA_AGE6> VLVOO1 + OH = OH</p>
+<pre><code>  + 0.6664 * VLVOO1 + 0.0143 * VLVOO2
+  + 0.0123 * VSVOO1 + 0.1239 * VSVOO2
+  + 0.1831 * VSVOO3                   #4.0e-11;
+</code></pre><p><POA_AGE7> VLVOO2 + OH = OH</p>
+<pre><code>  + 0.2858 * VLVOO1 + 0.3931 * VLVOO2
+  + 0.0139 * VSVOO1 + 0.1027 * VSVOO2
+  + 0.2045 * VSVOO3                   #4.0e-11;
+</code></pre><p><POA_AGE8> VSVOO1 + OH = OH</p>
+<pre><code>  + 0.3303 * VLVOO1 + 0.2272 * VLVOO2
+  + 0.2607 * VSVOO1 + 0.0702 * VSVOO2
+  + 0.1116 * VSVOO3                   #4.0e-11;
+</code></pre><p><POA_AGE9> VSVOO2 + OH = OH</p>
+<pre><code>  + 0.3444 * VLVOO1 + 0.2749 * VLVOO2
+  + 0.0491 * VSVOO1 + 0.2577 * VSVOO2
+  + 0.0739 * VSVOO3                   #4.0e-11;
+</code></pre><p><POA_AGE10> VSVOO3 + OH = OH</p>
+<pre><code>  + 0.3886 * VLVOO1 + 0.2421 * VLVOO2
+  + 0.0640 * VSVOO1 + 0.0385 * VSVOO2
+  + 0.2667 * VSVOO3                   #4.0e-11;
+</code></pre><p>! part 3. SOA production in SOA_DEFN.F</p>
+<pre><code> &amp; vapor_type(&#39;VLVPO1  &#39;,  0.0000,    1.e-1,  96.0E3, &#39;ALVPO1J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VSVPO1  &#39;,  0.0000,    1.e+0,  85.0E3, &#39;ASVPO1J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VSVPO2  &#39;,  0.0000,    1.e+1,  74.0E3, &#39;ASVPO2J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VSVPO3  &#39;,  0.0000,    1.e+2,  63.0E3, &#39;ASVPO3J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VIVPO1  &#39;,  0.0000,    1.e+3,  52.0E3, &#39;AIVPO1J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VLVOO1  &#39;,  0.0000,    1.e-2, 107.0E3, &#39;ALVOO1J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VLVOO2  &#39;,  0.0000,    1.e-1,  96.0E3, &#39;ALVOO2J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VSVOO1  &#39;,  0.0000,    1.e+0,  85.0E3, &#39;ASVOO1J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VSVOO2  &#39;,  0.0000,    1.e+1,  74.0E3, &#39;ASVOO2J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;),
+ &amp; vapor_type(&#39;VSVOO3  &#39;,  0.0000,    1.e+2,  63.0E3, &#39;ASVOO3J&#39;, &#39;A&#39;,  0.0, &#39;        &#39;)/)
+</code></pre><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- Potential Combustion SOA：APCSOJ（这部分的加入是为了补偿IVOC氧化，wall loss, VOC产物多级氧化等过程的缺失）</span><br><span class="line"></span><br><span class="line">    - ```fortran</span><br><span class="line">      ! part 1. emissions in GC.nml</span><br><span class="line">      &#x27;PCVOC:170:POC:0.0387:VD_GEN_ALD:1.0:::GENERIC_ALDEHYDE:1.0:::Yes:Yes:Yes:Yes&#x27;,</span><br><span class="line"></span><br><span class="line">      ! part 2. reaction with OH to produce PCSOARXN in mech.def</span><br><span class="line">      ! Formation of Potential Combustion SOA (pcSOA)</span><br><span class="line">      &lt;PCSOA&gt;  PCVOC + OH       = OH  + PCSOARXN  # 1.25E-11;</span><br><span class="line"></span><br><span class="line">      ! part 3. SOA production in SOA_DEFN.F</span><br><span class="line">           &amp; vapor_type(&#x27;LV_PCSOG&#x27;,  1.0   ,   1.0e-5,  40.0E3, &#x27;APCSOJ &#x27;, &#x27;A&#x27;, 10.0, &#x27;PCSOARXN&#x27;),</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>更新Glyoxal and methylglyoxal SOA updates （Pye et al., 2017, ACP）</p>
+<ul>
+<li>在5.1版本上修改 uptake coefficient of MGLY</li>
+</ul>
+</li>
+<li><p>更新SOA的一些属性：Several properties of semivolatile SOA species (aerosol and nonreactives) were updated: number of carbon atoms per molecule, density, organic-mass-to-organic-carbon (OM/OC) ratio (now in species definition file), and molecular weights. In addition, unique dry and wet deposition surrogates were implemented for each semivolatile species. See Pye et al. (2017) for how updated properties were determined</p>
+</li>
+<li></li>
+</ul>
+<h3 id="CMAQ-v5-3"><a href="#CMAQ-v5-3" class="headerlink" title="CMAQ v5.3"></a>CMAQ v5.3</h3><ul>
+<li>参考Appel et al., 2021, GMD; Xu et al., 2018, ACP; Qin et al., 2021, NS</li>
+<li>增加aero7气溶胶方案，注意编译的时候选择</li>
+<li>aero7中更新 organic nitrates from monoterpenes机制，原有的ATRP(1,2)替换为AMT(1-7),模式中实际只有AMT1-6,SVMT7 is ignored assuming it does not condense appreciably to the particle phase.</li>
+<li>注意排放处理的时候需要单独出$\alpha-pinene$ ； Use the emission control file and assign 30% of emitted TERP to APIN and 70% of emitted TERP to TERP.</li>
+<li></li>
+<li></li>
+<li>a图是aero6中的SOA，b图是Xu et al., 2018, ACP更新部分（AMT1-7），红色表示新增，蓝色表示删除的部分</li>
+<li>基于VBS框架的SOA生成，AAVB1J, AAVB2J, AAVB3J, AAVB4J替换aero6中的人为源部分ABNZ1J, ABNZ2J, ABNZ3J, SV_BNZ1, SV_BNZ2, AXYL1J, AXYL2J, AXYL3J, SV_XYL1, SV_XYL2, ATOL1J, ATOL2J, ATOL3J, SV_TOL1, SV_TOL2, APAH1J, APAH2J, APAH3J, SV_PAH1, SV_PAH2, AALK1J, AALK2J, SV_ALK1, SV_ALK2,详见Qin et al., 2021. <strong>Supplementary Table 5.</strong> </li>
+<li>在mech.def文件中，原有的BNZNRXN等替换为对应的SVAVB1-4，详见Qin et al., 2021. <strong>Supplementary Table 4.</strong> </li>
+<li>物种生成路径（源解析标记物种说明）：<ol>
+<li>AAVB1J， AAVB2J， AAVB3J， AAVB4J</li>
+</ol>
+</li>
+</ul>
+<h3 id="组内版本"><a href="#组内版本" class="headerlink" title="组内版本"></a>组内版本</h3><ul>
+<li>默认黑色箭头，半挥发性 SV-SOA<ul>
+<li>ALK5， BNZ， ARO，XYL，ISO，TERP，SESQT</li>
+<li>烷烃，苯，芳香烃，二甲苯，异戊二烯，单萜烯 ，倍半萜烯</li>
+</ul>
+</li>
+<li>红色： 非挥发性 NV-SOA<ul>
+<li>乙二醛（GLY），甲基乙二醛（MGLY），异戊二烯环氧化物（IEPOX）和甲基丙烯酸环氧化物（MAE）</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li>对SOA的相对贡献<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</li>
+<li>SV-SOA and NV-SOA<ul>
+<li></li>
+<li></li>
+</ul>
+</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>CMAQ不同版本SOA机制</p><p><a href="https://xiaodongnju.github.io/blog/2022/10/25/CMAQ不同版本SOA机制/">https://xiaodongnju.github.io/blog/2022/10/25/CMAQ不同版本SOA机制/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Xiaodong</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-25</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-09-09</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/blog/tags/CMAQ/">CMAQ</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://xiaodongnju.github.io/blog" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/blog/2022/11/01/HazeDayIndex/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">HazeDayIndex</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/blog/2022/10/25/CMAQ%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B/"><span class="level-item">CMAQ代码说明</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-2-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/blog/img/avatar.png" alt="Xiaodong"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Xiaodong</p><p class="is-size-6 is-block">Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China, Earth</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/blog/archives"><p class="title">29</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/blog/categories"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/blog/tags"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/xiaodongnju" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/blog/categories/aerosol/"><span class="level-start"><span class="level-item">aerosol</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/example/"><span class="level-start"><span class="level-item">example</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/linux/"><span class="level-start"><span class="level-item">linux</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/map/"><span class="level-start"><span class="level-item">map</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/model/"><span class="level-start"><span class="level-item">model</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/paper/"><span class="level-start"><span class="level-item">paper</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/blog/categories/python/"><span class="level-start"><span class="level-item">python</span></span><span class="level-end"><span class="level-item tag">10</span></span></a><ul><li><a class="level is-mobile" href="/blog/categories/python/data/"><span class="level-start"><span class="level-item">data</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-06-12T00:34:03.871Z">2023-06-12</time></p><p class="title"><a href="/blog/2023/06/12/%E6%8E%A5%E5%8F%A3/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-03-24T01:18:14.000Z">2023-03-24</time></p><p class="title"><a href="/blog/2023/03/24/%E6%A8%A1%E5%BC%8F%E4%B8%AD%E6%B0%94%E6%BA%B6%E8%83%B6%E5%85%89%E5%AD%A6%E6%80%A7%E8%B4%A8%E4%BF%AE%E6%94%B9%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%87%E7%8C%AE/">模式中气溶胶光学性质相关文献总结</a></p><p class="categories"><a href="/blog/categories/paper/">paper</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-03-24T01:18:14.000Z">2023-03-24</time></p><p class="title"><a href="/blog/2023/03/24/%E6%B0%94%E6%BA%B6%E8%83%B6%E5%85%89%E5%AD%A6%E6%80%A7%E8%B4%A8/">气溶胶光学性质</a></p><p class="categories"><a href="/blog/categories/aerosol/">aerosol</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-11-01T03:14:20.000Z">2022-11-01</time></p><p class="title"><a href="/blog/2022/11/01/HazeDayIndex/">HazeDayIndex</a></p><p class="categories"><a href="/blog/categories/paper/">paper</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-25T01:18:14.000Z">2022-10-25</time></p><p class="title"><a href="/blog/2022/10/25/CMAQ%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACSOA%E6%9C%BA%E5%88%B6/">CMAQ不同版本SOA机制</a></p><p class="categories"><a href="/blog/categories/model/">model</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/blog/archives/2023/06/"><span class="level-start"><span class="level-item">六月 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/blog/archives/2023/03/"><span class="level-start"><span class="level-item">三月 2023</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/blog/archives/2022/11/"><span class="level-start"><span class="level-item">十一月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/blog/archives/2022/10/"><span class="level-start"><span class="level-item">十月 2022</span></span><span class="level-end"><span class="level-item tag">25</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/blog/tags/CMAQ/"><span class="tag">CMAQ</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/FORTRAN/"><span class="tag">FORTRAN</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/WRF-Chem/"><span class="tag">WRF-Chem</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/data-analysis/"><span class="tag">data analysis</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/haze/"><span class="tag">haze</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/meteoroogy/"><span class="tag">meteoroogy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/other/"><span class="tag">other</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/reach/"><span class="tag">reach</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/software/"><span class="tag">software</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/visualization/"><span class="tag">visualization</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/%E5%85%89%E5%AD%A6%E6%80%A7%E8%B4%A8/"><span class="tag">光学性质</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/%E9%BB%91%E7%A2%B3/"><span class="tag">黑碳</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/blog/tags/%E9%BB%91%E7%A2%B3%E3%80%81WRF-chem/"><span class="tag">黑碳、WRF-chem</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">订阅更新</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="订阅"></div></div></form></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-2-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#不同版本SOA机制"><span class="level-left"><span class="level-item">1</span><span class="level-item">不同版本SOA机制</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#物种对比"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">物种对比</span></span></a></li><li><a class="level is-mobile" href="#CMAQ-v4-7"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">CMAQ v4.7</span></span></a></li><li><a class="level is-mobile" href="#CMAQ-v5-1"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">CMAQ v5.1</span></span></a></li><li><a class="level is-mobile" href="#CMAQ-v5-2"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">CMAQ v5.2</span></span></a></li><li><a class="level is-mobile" href="#CMAQ-v5-3"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">CMAQ v5.3</span></span></a></li><li><a class="level is-mobile" href="#组内版本"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">组内版本</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/blog/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/blog/"><img src="/blog/img/logo.svg" alt="Hi there." height="28"></a><p class="is-size-7"><span>&copy; 2023 Xiaodong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/blog/js/column.js"></script><script src="/blog/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/blog/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/blog/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/blog/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/blog/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
